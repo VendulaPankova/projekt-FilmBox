@@ -103,4 +103,90 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+
+	{
+		id: 'black-adam',
+		nazev: 'Black Adam',
+		plakat: {
+			url: 'https://www.kinopohoda.cz/data-files/kino/event/images/black-adam.jpg',
+			sirka: 420,
+			vyska: 592,
+		},
+		ochutnavka: 'Akční/Sci-FI film.',
+		popis:
+			'Téměř 5000 let poté, co byl obdařen všemocnou mocí egyptských bohů - a stejně rychle uvězněn - je Black Adam (Dwayne Johnson) vysvobozen ze svého pozemského hrobu a připraven rozpoutat v moderním světě svou jedinečnou formu spravedlnosti.',
+		premiera: '2022-12-24',
+	},
 ]
+
+const filmID = window.location.hash.slice(1) // získáme z filmu URL bez hashe slize odstraní #
+const filmData = filmy.find((film) => film.id === filmID) // pomocí find, hledáme konkrétní film podle jeho ID
+
+const detailFilmu = document.querySelector("#detail-filmu") // propojíme prvek kam budeme vkládat detail filmu
+
+
+// zde vložíme to co chceme zobrazit ... názeva popis filmu
+detailFilmu.innerHTML = ` 
+  <div class="row g-0">
+    <div class="col-md-5">
+      <img
+        src="${filmData.plakat.url}"
+        alt="plakát filmu ${filmData.nazev}"
+        class="img-fluid rounded-start"
+      />
+    </div>
+    <div class="col-md-7">
+      <div class="card-body">
+        <h5 class="card-title">${filmData.nazev}</h5>
+        <p class="card-text">${filmData.popis}</p>
+        <p class="card-text">
+          <small class="text-muted">Premiéra: ${filmData.premiera}</small>
+        </p>
+      </div>
+    </div>
+  </div>
+ `
+
+ // 1. V souboru film.js pomocí document.querySelector najděte prvek s id note-form.
+const noteForm = document.querySelector("#note-form")
+console.log(noteForm)
+
+// 2. Při pokusu o odeslání tohoto formuláře zamezte výchozí chování prohlížeče.
+noteForm.addEventListener("submit", (event) => {
+  event.preventDefault()
+
+  // Najděte prvky textového pole a checkboxu
+  const messageInput = document.querySelector("#message-input")
+  const termsCheckbox = document.querySelector("#terms-checkbox")
+
+ // 3. Ověřte, že uživatel do textového pole, prvku s id message-input něco napsal. 
+ // Pokud ne, přidejte prvku třídu is-invalid, která ho zvýrazní červeně.
+  messageInput.classList.remove("is-invalid")
+  termsCheckbox.classList.remove("is-invalid")
+
+ // bonus
+  if (!messageInput.value.trim()) {
+    messageInput.classList.add("is-invalid") // Přidá červené zvýraznění
+    messageInput.focus() // Přenese kurzor na textové pole
+    return // Ukončí zpracování, dokud není vyplněno
+  }
+
+
+  // 4. Pokud uživatel něco napsal, ověřte, že souhlasil s podmínkami, že zaškrtl políčko s id terms-checkbox.
+  // Pokud nezaškrtl, přidejte políčku třídu is-invalid
+  if (!termsCheckbox.checked) {
+    termsCheckbox.classList.add("is-invalid") // Přidá červené zvýraznění
+    termsCheckbox.focus() // Zaměří checkbox
+    return // Ukončí zpracování, dokud není zaškrtnuto
+  }
+
+  // 5. Pokud uživatel splnil obě podmínky z kroků výše, 
+  // nahraďte HTML obsah formuláře za odstavec <p class="card-text">…</p> s textem z textového pole.
+  noteForm.innerHTML = `
+    <p class="card-text">${messageInput.value}</p>
+  `
+}) /// nefunguje 
+
+
+
+

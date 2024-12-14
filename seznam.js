@@ -103,4 +103,50 @@ const filmy = [
 			'Na zámek v podhůří Krkonoš přijíždí jeho nový majitel Štěpán se svojí snoubenkou, krásnou komtesou Blankou, a mladším bratrem Adamem. Cestou kočár nešťastně srazí kolemjdoucí dívku, Adam jí pomůže a ona se do něj zamiluje. Na zámku Adam objeví starou vlašskou knihu, která by měla obsahovat cestu k pokladům. Tajemné značky vlašské knihy však nedokáže vyluštit ani národopisec Jiráček, který v kraji sbírá pověsti a nevychází z údivu nad tím, že zdejší lidé stále věří v Krakonoše. Na zámku se objeví záhadný cizinec a nabídne Štěpánovi, že jej k pokladu za určitých podmínek dovede. Výprava do hor může začít. Naplní se Liduščina láska k Adamovi? Jakou záhadu skrývá starý obraz na zámku Hůrka a co strašlivého se v horách kdysi odehrálo? A kdo je vlastně Krakonoš a jaké je jeho největší tajemství? (csfd.cz, Česká televize)',
 		premiera: '2022-12-24',
 	},
+
+	{
+		id: 'black-adam',
+		nazev: 'Black Adam',
+		plakat: {
+			url: 'https://www.kinopohoda.cz/data-files/kino/event/images/black-adam.jpg',
+			sirka: 420,
+			vyska: 592,
+		},
+		ochutnavka: 'Akční/Sci-FI film.',
+		popis:
+			'Téměř 5000 let poté, co byl obdařen všemocnou mocí egyptských bohů - a stejně rychle uvězněn - je Black Adam (Dwayne Johnson) vysvobozen ze svého pozemského hrobu a připraven rozpoutat v moderním světě svou jedinečnou formu spravedlnosti.',
+		premiera: '2022-12-24',
+	},
 ]
+
+//2. Na konci souboru seznam.js pomocí document.querySelector vyhledejte prvek s id seznam-filmu.
+const seznamFilumEl = document.querySelector("#seznam-filmu")
+
+//3. Vymažte tomuto prvku jeho vnitřní HTML, aby byl prázdný.
+
+seznamFilumEl.innerHTML = ""
+
+filmy.forEach(film => {
+
+	seznamFilumEl.innerHTML += `
+	<div class="col">
+           <div class="card">
+              <img
+                 src="${film.plakat.url}"
+                 width="${film.plakat.sirka}"
+                 height="${film.plakat.vyska}"
+                 class="card-img-top"
+                 alt="plakát filmu ${film.nazev}"
+              />
+              <div class="card-body">
+                 <h5 class="card-title">${film.nazev}</h5>
+                 <p class="card-text">${film.ochutnavka}</p>
+                 <a href="film.html#${film.id}" class="btn btn-primary">Přehrát</a>
+              </div>
+           </div>
+        </div>
+`
+})
+
+
+
