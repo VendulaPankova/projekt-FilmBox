@@ -119,33 +119,32 @@ const filmy = [
 	},
 ]
 
-const filmID = window.location.hash.slice(1) // získáme z filmu URL bez hashe slize odstraní #
-const filmData = filmy.find((film) => film.id === filmID) // pomocí find, hledáme konkrétní film podle jeho ID
+// 1. Získáme ID filmu z URL (bez mřížky)
+const filmID = window.location.hash.slice(1);
 
-const detailFilmu = document.querySelector("#detail-filmu") // propojíme prvek kam budeme vkládat detail filmu
+// 2. Najdeme data filmu podle ID
+const filmData = filmy.find((film) => film.id === filmID);
 
+if (filmData) {
+  // 3. Najdeme element #detail-filmu
+  const detailFilmu = document.querySelector("#detail-filmu");
 
-// zde vložíme to co chceme zobrazit ... názeva popis filmu
-detailFilmu.innerHTML = ` 
-  <div class="row g-0">
-    <div class="col-md-5">
-      <img
-        src="${filmData.plakat.url}"
-        alt="plakát filmu ${filmData.nazev}"
-        class="img-fluid rounded-start"
-      />
-    </div>
-    <div class="col-md-7">
-      <div class="card-body">
-        <h5 class="card-title">${filmData.nazev}</h5>
-        <p class="card-text">${filmData.popis}</p>
-        <p class="card-text">
-          <small class="text-muted">Premiéra: ${filmData.premiera}</small>
-        </p>
-      </div>
-    </div>
-  </div>
- `
+  // Najdeme jednotlivé prvky uvnitř #detail-filmu
+  const imgElement = detailFilmu.querySelector("img"); // Obrázek
+  const titleElement = detailFilmu.querySelector(".card-title"); // Název
+  const descriptionElement = detailFilmu.querySelector(".card-text"); // Popis
+  const premiereElement = detailFilmu.querySelector(".text-muted"); // Premiéra
+
+  // 4. Upravíme obsah jednotlivých prvků
+  imgElement.src = filmData.plakat.url; // Nastavíme zdroj obrázku
+  imgElement.alt = `Plakát filmu ${filmData.nazev}`; // Alternativní text
+
+  titleElement.textContent = filmData.nazev; // Nastavíme název filmu
+  descriptionElement.textContent = filmData.popis; // Nastavíme popis filmu
+  premiereElement.textContent = `Premiéra: ${filmData.premiera}`; // Nastavíme premiéru
+} else {
+  console.error("Film nebyl nalezen!");
+}
 
  // 1. V souboru film.js pomocí document.querySelector najděte prvek s id note-form.
 const noteForm = document.querySelector("#note-form")
@@ -185,7 +184,7 @@ noteForm.addEventListener("submit", (event) => {
   noteForm.innerHTML = `
     <p class="card-text">${messageInput.value}</p>
   `
-}) /// nefunguje 
+}) 
 
 
 
